@@ -38,12 +38,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
-//    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
-//    private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
+    private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
-    private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarNetworkActivity;
 
     @Override
@@ -72,16 +70,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
                 Settings.System.STATUS_BAR_NOTIF_COUNT, 0) == 1);
         mStatusBarNotifCount.setOnPreferenceChangeListener(this);
 
-//        mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
-//        mStatusBarTraffic.setChecked(Settings.System.getInt(resolver,
-//            Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
-//        mStatusBarTraffic.setOnPreferenceChangeListener(this);
-
-//        mStatusBarNetworkActivity = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NETWORK_ACTIVITY);
-//        mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
-//            Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
-//        mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
-//        mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
+        mStatusBarNetworkActivity = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NETWORK_ACTIVITY);
+        mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
+            Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
+         mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -97,14 +89,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         } else if (preference == mStatusBarNotifCount) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
-//        } else if (preference == mStatusBarTraffic) {
-//            boolean value = (Boolean) objValue;
-//            Settings.System.putInt(resolver,
-//                Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
-//        } else if (preference == mStatusBarNetworkActivity) {
-//            boolean value = (Boolean) objValue;
-//            Settings.System.putInt(resolver,
-//                Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
+        } else if (preference == mStatusBarNetworkActivity) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver,
+                Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
         } else {
             return false;
         }
