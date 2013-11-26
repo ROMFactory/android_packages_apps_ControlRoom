@@ -50,7 +50,7 @@
 
     <PreferenceScreen
         android:key="navigation_ring"
-        android:fragment="org.omnirom.omnigears.interfacesettings.NavRing"
+        android:fragment="org.pcarenza.controlroom.interfacesettings.NavRing"
         android:title="@string/navigation_ring_title" />
 
 </PreferenceScreen>
