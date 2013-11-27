@@ -53,10 +53,14 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
+    private static final String KEY_LISTVIEW_ANIMATION = "listview_animation";
+    private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mStatusBarCustomHeader;
+    private ListPreference mListViewAnimation;
+    private ListPreference mListViewInterpolator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,22 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
         mStatusBarCustomHeader.setChecked(Settings.System.getInt(resolver,
             Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1);
         mStatusBarCustomHeader.setOnPreferenceChangeListener(this);
+
+        //ListView Animations
+
+        mListViewAnimation = (ListPreference) prefSet.findPreference(KEY_LISTVIEW_ANIMATION);
+        String listViewAnimation = Settings.System.getString(resolver, Settings.System.LISTVIEW_ANIMATION);
+        if (listViewAnimation != null) {
+             mListViewAnimation.setValue(listViewAnimation);
+        }
+        mListViewAnimation.setOnPreferenceChangeListener(this);
+
+        mListViewInterpolator = (ListPreference) prefSet.findPreference(KEY_LISTVIEW_INTERPOLATOR);
+        String listViewInterpolator = Settings.System.getString(resolver, Settings.System.LISTVIEW_INTERPOLATOR);
+        if (listViewInterpolator != null) {
+             mListViewInterpolator.setValue(listViewInterpolator);
+        }
+        mListViewInterpolator.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -120,6 +140,12 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                 Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
+        } else if (preference == mListViewAnimation) {
+            String value = (String) objValue;
+            Settings.System.putString(resolver, Settings.System.LISTVIEW_ANIMATION, value);
+        } else if (preference == mListViewInterpolator) {
+            String value = (String) objValue;
+            Settings.System.putString(resolver, Settings.System.LISTVIEW_INTERPOLATOR, value);
         } else {
             return false;
         }
