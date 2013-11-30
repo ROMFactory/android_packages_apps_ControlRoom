@@ -82,5 +82,10 @@
     <string name="show_activity_indicators_on_status_bar_title">Network activity indicator</string>
     <string name="show_activity_indicators_on_status_bar_summary">Show network activity in statusbar</string>
 
+    <!-- Power Menu Options-->
+    <string name="bars_and_menus_category_power_menu_title">Power menu</string>
+    <string name="power_menu_screenrecord_title">Screen Record</string>
+    <string name="power_menu_screenrecord_summary">Show screen Record option in Power Menu</string>
+
 </resources>
 

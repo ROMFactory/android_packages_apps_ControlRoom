@@ -20,4 +20,16 @@
         android:title="@string/interface_menus_title"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <!-- Power Menu -->
+    <PreferenceCategory
+            android:key="category_power_menu"
+            android:title="@string/bars_and_menus_category_power_menu_title">
+
+    <CheckBoxPreference
+            android:key="power_menu_screenrecord"
+            android:title="@string/power_menu_screenrecord_title"
+            android:summary="@string/power_menu_screenrecord_summary"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
