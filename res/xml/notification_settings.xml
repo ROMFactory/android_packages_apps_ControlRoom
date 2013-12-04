@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 The OmniROM Project
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- Status bar -->
+        <PreferenceCategory
+            android:key="background_style"
+            android:title="@string/notification_category_background_title"/>
+
+        <ListPreference
+            android:key="notification_wallpaper"
+            android:persistent="false"
+            android:dialogTitle="@string/notification_wallpaper_title"
+            android:title="@string/notification_wallpaper_title"
+            android:entries="@array/notification_wallpaper_entries"
+            android:entryValues="@array/notification_wallpaper_values"/>
+
+        <ListPreference
+            android:key="notification_wallpaper_landscape"
+            android:persistent="false"
+            android:dialogTitle="@string/notification_wallpaper_landscape_title"
+            android:title="@string/notification_wallpaper_landscape_title"
+            android:entries="@array/notification_wallpaper_landscape_entries"
+            android:entryValues="@array/notification_wallpaper_landscape_values"/>
+
+        <com.android.settings.widget.SeekBarPreference
+             android:key="notification_wallpaper_alpha"
+             android:title="@string/notif_wallpaper_alpha_title" />
+
+</PreferenceScreen>
+
