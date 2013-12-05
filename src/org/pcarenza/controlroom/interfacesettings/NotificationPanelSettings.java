@@ -1,20 +1,25 @@
 /*
- * Copyright (C) 2012 Slimroms Project
+ *  Copyright (C) 2013 The OmniROM Project
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
-package org.pcarenza.controlroom;
+package org.pcarenza.controlroom.interfacesettings;
+
+import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,14 +31,20 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.PreferenceGroup;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
-import android.provider.Settings;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
+
 import android.view.Display;
 import android.widget.Toast;
 
@@ -46,11 +57,12 @@ import java.io.File;
 
 import net.margaritov.preference.colorpicker.ColorPickerView;
 
-public class NotificationDrawerStyle extends SettingsPreferenceFragment implements
-        OnPreferenceChangeListener {
 
-    private static final String TAG = "NotificationDrawerStyle";
+public class NotificationPanelSettings extends SettingsPreferenceFragment implements
+        Preference.OnPreferenceChangeListener {
+    private static final String TAG = "NotificationPanelSettings";
 
+    private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
     private static final String PREF_NOTIFICATION_WALLPAPER =
             "notification_wallpaper";
     private static final String PREF_NOTIFICATION_WALLPAPER_LANDSCAPE =
@@ -60,14 +72,13 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
     private static final String PREF_NOTIFICATION_ALPHA =
             "notification_alpha";
 
-
     private static final int DLG_PICK_COLOR = 0;
 
+    CheckBoxPreference mStatusBarCustomHeader;
     private ListPreference mNotificationWallpaper;
     private ListPreference mNotificationWallpaperLandscape;
     SeekBarPreference mWallpaperAlpha;
     SeekBarPreference mNotificationAlpha;
-
 
     private File mImageTmp;
 
@@ -79,14 +90,10 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mActivity = getActivity();
-
-        addPreferencesFromResource(R.xml.notification_settings);
-
+        addPreferencesFromResource(R.xml.notification_panel_settings);
         PreferenceScreen prefSet = getPreferenceScreen();
-
-        mImageTmp = new File(getActivity().getFilesDir() + "/notifi_bg.tmp");
+        ContentResolver resolver = mActivity.getContentResolver();
 
         mNotificationWallpaper =
                 (ListPreference) findPreference(PREF_NOTIFICATION_WALLPAPER);
@@ -109,6 +116,7 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
             Settings.System.putFloat(getContentResolver(),
                     Settings.System.NOTIFICATION_BACKGROUND_ALPHA, 0.1f);
         }
+
         mWallpaperAlpha = (SeekBarPreference) findPreference(PREF_NOTIFICATION_WALLPAPER_ALPHA);
         mWallpaperAlpha.setInitValue((int) (transparency * 100));
         mWallpaperAlpha.setProperty(Settings.System.NOTIFICATION_BACKGROUND_ALPHA);
@@ -122,21 +130,25 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
             Settings.System.putFloat(getContentResolver(),
                     Settings.System.NOTIFICATION_ALPHA, 0.0f);
         }
+
         mNotificationAlpha = (SeekBarPreference) findPreference(PREF_NOTIFICATION_ALPHA);
         mNotificationAlpha.setInitValue((int) (transparency * 100));
         mNotificationAlpha.setProperty(Settings.System.NOTIFICATION_ALPHA);
         mNotificationAlpha.setOnPreferenceChangeListener(this);
 
         updateCustomBackgroundSummary();
-    }
 
+        mStatusBarCustomHeader = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_CUSTOM_HEADER);
+        mStatusBarCustomHeader.setChecked(Settings.System.getInt(resolver,
+            Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1);
+        mStatusBarCustomHeader.setOnPreferenceChangeListener(this);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         updateCustomBackgroundSummary();
     }
-
 
     private void updateCustomBackgroundSummary() {
         int resId;
@@ -261,19 +273,29 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
         }
     }
 
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mWallpaperAlpha) {
-            float valNav = Float.parseFloat((String) newValue);
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        return true;
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object objValue) {
+        ContentResolver resolver = getActivity().getContentResolver();
+        if (preference == mStatusBarCustomHeader) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver,
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
+        } else if (preference == mWallpaperAlpha) {
+            float valNav = Float.parseFloat((String) objValue);
             Settings.System.putFloat(getContentResolver(),
                     Settings.System.NOTIFICATION_BACKGROUND_ALPHA, valNav / 100);
             return true;
         } else if (preference == mNotificationAlpha) {
-            float valNav = Float.parseFloat((String) newValue);
+            float valNav = Float.parseFloat((String) objValue);
             Settings.System.putFloat(getContentResolver(),
                     Settings.System.NOTIFICATION_ALPHA, valNav / 100);
             return true;
         }else if (preference == mNotificationWallpaper) {
-            int indexOf = mNotificationWallpaper.findIndexOfValue(newValue.toString());
+            int indexOf = mNotificationWallpaper.findIndexOfValue(objValue.toString());
             switch (indexOf) {
                 //Displays color dialog when user has chosen color fill
                 case 0:
@@ -294,7 +316,7 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
             }
             return true;
         }else if (preference == mNotificationWallpaperLandscape) {
-            int indexOf = mNotificationWallpaperLandscape.findIndexOfValue(newValue.toString());
+            int indexOf = mNotificationWallpaperLandscape.findIndexOfValue(objValue.toString());
             switch (indexOf) {
                 //Launches intent for user to select an image/crop it to set as background
                 case 0:
@@ -307,8 +329,11 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
                     break;
             }
             return true;
+        } else {
+            return false;
         }
-        return false;
+
+        return true;
     }
 
     private void showDialogInner(int id) {
@@ -327,8 +352,8 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
             return frag;
         }
 
-        NotificationDrawerStyle getOwner() {
-            return (NotificationDrawerStyle) getTargetFragment();
+        NotificationPanelSettings getOwner() {
+            return (NotificationPanelSettings) getTargetFragment();
         }
 
         @Override
