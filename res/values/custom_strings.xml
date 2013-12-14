@@ -87,6 +87,15 @@
     <string name="bars_and_menus_category_power_menu_title">Power menu</string>
     <string name="power_menu_screenrecord_title">Screen Record</string>
     <string name="power_menu_screenrecord_summary">Show screen Record option in Power Menu</string>
+    <string name="power_menu_toggle_screenshot_title">Screenshot</string>
+    <string name="power_menu_toggle_screenshot_summary">Show screenshot option in Power Menu</string>
+    <string name="power_menu_toggle_mobile_data_title">Mobile Data</string>
+    <string name="power_menu_toggle_mobile_data_summary">Show Mobile Data option in Power Menu</string>
+    <string name="power_menu_toggle_airplane_mode_title">Airplane mode</string>
+    <string name="power_menu_toggle_airplane_mode_summary">Show Airplane option in Power Menu</string>
+    <string name="power_menu_toggle_sound_toggles_title">Sound toggles</string>
+    <string name="power_menu_toggle_sound_toggles_summary">Show sound toggles in Power Menu</string>
+
 
     <!-- Navigation ring shortcuts -->
     <string name="navigation_ring_title">Quick launch shortcuts</string>
