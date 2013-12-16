@@ -43,6 +43,16 @@
             android:summary="@string/show_activity_indicators_on_status_bar_summary"
             android:persistent="false"/>
 
+         <PreferenceScreen
+            android:key="status_bar_clock"
+            android:fragment="org.pcarenza.controlroom.interfacesettings.StatusBarClock"
+            android:title="@string/status_bar_clock_title" />
+
+        <PreferenceScreen
+            android:key="battery_bar"
+            android:fragment="org.pcarenza.controlroom.BatteryBarStyle"
+            android:title="@string/battery_bar_title" />
+
     <!-- Navigation bar -->
     <PreferenceCategory
         android:key="category_navigation_bar"
