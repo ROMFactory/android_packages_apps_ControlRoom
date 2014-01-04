@@ -283,6 +283,7 @@
     <string name="ad_pocket_mode_off">Off</string>
     <string name="ad_pocket_mode_notifications">Notifications only</string>
     <string name="ad_pocket_mode_always">Always</string>
+<<<<<<< HEAD
     <string name="bars_and_menus_category_recent_panel_title" >Recents menu</string>
 
     <!-- Battery Bar -->
@@ -331,4 +332,85 @@
     <!-- Screen-On Notification Light -->
     <string name="screen_on_notification_led_title">Screen-On Notification Light</string>
     <string name="screen_on_notification_led_summary">Enable Notification Light even when screen is on</string> 
+
+    <!-- Volume default -->
+    <string name="button_volume_default_none">None</string>
+    <string name="button_volume_default_ringer">Ringer</string>
+    <string name="button_volume_default_media">Media</string>
+    <string name="button_volume_default_title">Volume default</string>
+    <string name="button_volume_default_summary">Choose which volume gets changed by default</string>
+
+    <!-- Driving mode -->
+    <string name="voice_tts_title">Driving Mode</string>
+    <string name="tts_settings_reset_message">Reset all settings to default?</string>
+    <string name="voice_tts_notification_title">Drive mode</string>
+    <string name="voice_tts_notification_summary_on">Enable driving mode</string>
+    <string name="voice_tts_notification_summary_off">Disable driving mode</string>
+    <string name="voice_tts_volume_title">Volume</string>
+    <string name="voice_tts_volume_summary">Set volume for speak</string>
+    <string name="voice_tts_call_title">Incoming call</string>
+    <string name="voice_tts_call_summary">Enable/disable speak for Incoming calls</string>
+    <string name="voice_tts_sms_title">New message</string>
+    <string name="voice_tts_sms_summary">Enable/disable speak for New messages</string>
+    <string name="voice_tts_sms_read_title">Read new message</string>
+    <string name="voice_tts_sms_read_summary">Enable/disable speak for Read New messages</string>
+    <string name="voice_tts_charge_full_title">Battery full indicator</string>
+    <string name="voice_tts_charge_full_summary">Enable/disable speak for battery fully charged</string>
+    <string name="voice_tts_charge_on_title">Connect charger</string>
+    <string name="voice_tts_charge_on_summary">Enable/disable speak for charging connected</string>
+    <string name="voice_tts_charge_off_title">Disconnect charger</string>
+    <string name="voice_tts_charge_off_summary">Enable/disable speak for charging disconnected</string>
+    <string name="voice_tts_clock_title">Clock</string>
+    <string name="voice_tts_clock_summary">Enable/disable speak for clock after screen turn on</string>
+    <string name="voice_tts_date_title">Date</string>
+    <string name="voice_tts_date_summary">Enable/disable speak for date after screen turn on</string>
+    <string name="voice_tts_notif_title">Notification</string>
+    <string name="voice_tts_notif_summary">Enable/disable speak for new notification</string>
+    <string name="voice_tts_notif_read_title">Read new notifications</string>
+    <string name="voice_tts_notif_read_summary">Enable/disable speak for Read New messages from notifications</string>
+    <string name="voice_tts_whitelist_title">Included applications</string>
+    <string name="voice_tts_whitelist_summary">Which apps allowed to speak for new notifications</string>
+
+    <!-- Driving mode -->
+
+    <!-- require add space in the end of string -->
+    <string name="voice_tts_new_call">Incoming call from </string>
+    <!-- require add space in the end of string -->
+    <string name="voice_tts_new_sms">New text message from </string>
+    <!-- require add space in the end of string -->
+    <string name="voice_tts_new_notif">New notification from </string>
+
+    <string name="voice_tts_charge_full">Battery fully charged</string>
+    <string name="voice_tts_charge_on">Charging Start</string>
+    <string name="voice_tts_charge_off">Charging Stop</string>
+    <string name="voice_tts_time">Time is</string>
+    <string name="voice_tts_date">Date is</string>
+    <string name="voice_tts_engine_started">Drive Mode Ready</string>
+    <string name="unknown_tts">Unknown</string>
+    <string name="unknown_number_tts">Unknown number</string>
+    <string name="time_one">One</string>
+    <string name="time_two">Two</string>
+    <string name="time_three">Three</string>
+    <string name="time_four">Four</string>
+    <string name="time_five">Five</string>
+    <string name="time_six">Six</string>
+    <string name="time_seven">Seven</string>
+    <string name="time_eight">Eight</string>
+    <string name="time_nine">Nine</string>
+    <string name="time_ten">Ten</string>
+    <string name="time_eleven">Eleven</string>
+    <string name="time_twelve">Twelve</string>
+    <string name="time_oclock">o Clock</string>
+    <string name="time_five_past">Five after</string>
+    <string name="time_ten_past">Ten after</string>
+    <string name="time_quarter_past">Quarter after</string>
+    <string name="time_twenty_past">Twenty</string>
+    <string name="time_twenty_five_past">TwentyFive after</string>
+    <string name="time_half_past">Half past</string>
+    <string name="time_twenty_five_to">TwentyFive till</string>
+    <string name="time_twenty_to">Twenty till</string>
+    <string name="time_quarter_to">Quarter till</string>
+    <string name="time_ten_to">Ten till</string>
+    <string name="time_five_to">Five till</string>
+
 </resources>
