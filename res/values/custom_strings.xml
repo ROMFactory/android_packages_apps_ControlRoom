@@ -283,7 +283,6 @@
     <string name="ad_pocket_mode_off">Off</string>
     <string name="ad_pocket_mode_notifications">Notifications only</string>
     <string name="ad_pocket_mode_always">Always</string>
-<<<<<<< HEAD
     <string name="bars_and_menus_category_recent_panel_title" >Recents menu</string>
 
     <!-- Battery Bar -->
