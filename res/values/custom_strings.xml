@@ -79,6 +79,12 @@
 
     <string name="shortcut_image_not_valid">The chosen app did not return a valid icon or does not support image cropping. Use another app</string>
 
+    <!-- Network speed -->
+    <string name="status_bar_show_network_stats_title">Network traffic indicator</string>
+    <string name="status_bar_show_network_stats_summary">Show network speeds in statusbar</string>
+    <string name="status_bar_network_stats_update_title">Update frequency</string>
+    <string name="status_bar_network_stats_update_summary">How often is indicator updated</string>
+
     <!-- Status Bar Activity Indicators -->
     <string name="show_activity_indicators_on_status_bar_title">Network activity indicator</string>
     <string name="show_activity_indicators_on_status_bar_summary">Show network activity in statusbar</string>

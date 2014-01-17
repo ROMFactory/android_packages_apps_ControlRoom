@@ -26,6 +26,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
@@ -36,13 +37,15 @@ import android.util.Log;
 import android.view.DisplayInfo;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
+import org.omnirom.omnigears.chameleonos.SeekBarPreference;
 
 public class BarsSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "BarsSettings";
 
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
+    private static final String NETWORK_STATS = "network_stats";
+    private static final String NETWORK_STATS_UPDATE_FREQUENCY = "network_stats_update_frequency";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
     private static final String SMART_PULLDOWN = "smart_pulldown";
@@ -57,7 +60,8 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_NAVBAR = "category_navigation_bar";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
-    private CheckBoxPreference mStatusBarTraffic;
+    private CheckBoxPreference mNetworkStats;
+    private SeekBarPreference mNetworkStatsUpdateFrequency;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mSMSBreath;
     private CheckBoxPreference mMissedCallBreath;
@@ -86,10 +90,15 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             }
         } catch (SettingNotFoundException e) {
         }
-        mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
-        mStatusBarTraffic.setChecked(Settings.System.getInt(getContentResolver(),
-            Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
-        mStatusBarTraffic.setOnPreferenceChangeListener(this);
+        mNetworkStats = (CheckBoxPreference) prefSet.findPreference(NETWORK_STATS);
+        mNetworkStats.setChecked(Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_NETWORK_STATS, 0) == 1);
+	        mNetworkStats.setOnPreferenceChangeListener(this);
+
+        mNetworkStatsUpdateFrequency = (SeekBarPreference) prefSet.findPreference(NETWORK_STATS_UPDATE_FREQUENCY);
+        mNetworkStatsUpdateFrequency.setValue(Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL, 500));
+        mNetworkStatsUpdateFrequency.setOnPreferenceChangeListener(this);
 
         mStatusBarNotifCount = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NOTIF_COUNT);
         mStatusBarNotifCount.setChecked(Settings.System.getInt(resolver,
@@ -98,7 +107,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 
         mSmartPulldown = (ListPreference) findPreference(SMART_PULLDOWN);	
 
-        if isPhone(getActivity())) {
+        if (isPhone(getActivity())) {
             int smartPulldown = Settings.System.getInt(resolver,
                     Settings.System.QS_SMART_PULLDOWN, 0);
             mSmartPulldown.setValue(String.valueOf(smartPulldown));
@@ -142,13 +151,19 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-            boolean value = (Boolean) objValue;
         if (preference == mStatusBarBrightnessControl) {
+            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
-        } else if (preference == mStatusBarTraffic) {
-            Settings.System.putInt(getContentResolver(),
-                Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
+        } else if (preference == mNetworkStats) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NETWORK_STATS,
+                   value ? 1 : 0);
+        } else if (preference == mNetworkStatsUpdateFrequency) {
+            int i = Integer.valueOf((Integer) objValue);
+            Settings.System.putInt(resolver,
+            Settings.System.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL, i);
         } else if (preference == mStatusBarNotifCount) {
+            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
         } else if (preference == mSmartPulldown) {
             int smartPulldown = Integer.valueOf((String) objValue);
@@ -156,30 +171,21 @@ public class BarsSettings extends SettingsPreferenceFragment implements
                     smartPulldown);
             updateSmartPulldownSummary(smartPulldown);
         } else if (preference == mSMSBreath) {
+            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                     Settings.System.KEY_SMS_BREATH, value ? 1 : 0);
         } else if (preference == mMissedCallBreath) {
+            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                     Settings.System.KEY_MISSED_CALL_BREATH, value ? 1 : 0);
         } else if (preference == mVoicemailBreath) {
+            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                     Settings.System.KEY_VOICEMAIL_BREATH, value ? 1 : 0);
         } else {
             return false;
         }
         return true;
-    }
-
-   private void updateQuickPulldownSummary(int i) {
-        if (i == 0) {
-            mQuickPulldown.setSummary(R.string.quick_pulldown_off);
-        } else if (i == 1) {
-            mQuickPulldown.setSummary(R.string.quick_pulldown_right);
-        } else if (i == 2) {
-            mQuickPulldown.setSummary(R.string.quick_pulldown_left);
-        } else if (i == 3) {
-            mQuickPulldown.setSummary(R.string.quick_pulldown_centre);
-        }
     }
 
     private void updateSmartPulldownSummary(int i) {

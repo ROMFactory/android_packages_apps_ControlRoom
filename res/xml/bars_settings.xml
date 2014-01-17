@@ -31,12 +31,6 @@
             android:summary="@string/status_bar_toggle_brightness_summary"
             android:persistent="false"/>
 
-        <CheckBoxPreference	
-            android:key="status_bar_traffic"
-            android:title="@string/show_network_speed"
-            android:summary="@string/show_network_speed_summary"
-            android:defaultValue="false" />
-
         <CheckBoxPreference
             android:key="status_bar_notif_count"
             android:title="@string/status_bar_notif_count_title"
@@ -69,6 +63,23 @@
             android:title="@string/missed_call_breath_title"
             android:summary="@string/missed_call_breath_summary"
             android:persistent="false"/>
+
+        <CheckBoxPreference
+                android:key="network_stats"
+                android:title="@string/status_bar_show_network_stats_title"
+                android:summary="@string/status_bar_show_network_stats_summary"
+                android:persistent="false" />
+
+        <org.omnirom.omnigears.chameleonos.SeekBarPreference
+                android:key="network_stats_update_frequency"
+                android:title="@string/status_bar_network_stats_update_title"
+                android:summary="@string/status_bar_network_stats_update_summary"
+                android:max="2500"
+                settings:interval="50"
+                settings:min="250"
+                settings:unitsLeft=""
+                settings:unitsRight="ms"
+                android:persistent="false" />
 
         <ListPreference
                 android:key="smart_pulldown"
