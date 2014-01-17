@@ -39,12 +39,14 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String TAG = "BarsSettings";
 
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
     private static final String CATEGORY_NAVBAR = "category_navigation_bar";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
+    private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mStatusBarNetworkActivity;
 
@@ -68,6 +70,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             }
         } catch (SettingNotFoundException e) {
         }
+        mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
+        mStatusBarTraffic.setChecked(Settings.System.getInt(getContentResolver(),
+            Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
+        mStatusBarTraffic.setOnPreferenceChangeListener(this);
 
         mStatusBarNotifCount = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NOTIF_COUNT);
         mStatusBarNotifCount.setChecked(Settings.System.getInt(resolver,
@@ -102,6 +108,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         if (preference == mStatusBarBrightnessControl) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
+        } else if (preference == mStatusBarTraffic) {
+            Settings.System.putInt(getContentResolver(),
+                Settings.System.STATUS_BAR_TRAFFIC, (Boolean) newValue ? 1 : 0);
         } else if (preference == mStatusBarNotifCount) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
