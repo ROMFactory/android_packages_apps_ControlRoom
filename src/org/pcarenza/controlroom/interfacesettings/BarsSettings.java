@@ -105,17 +105,15 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-        if (preference == mStatusBarBrightnessControl) {
             boolean value = (Boolean) objValue;
+        if (preference == mStatusBarBrightnessControl) {
             Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
         } else if (preference == mStatusBarTraffic) {
             Settings.System.putInt(getContentResolver(),
-                Settings.System.STATUS_BAR_TRAFFIC, (Boolean) newValue ? 1 : 0);
+                Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
         } else if (preference == mStatusBarNotifCount) {
-            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
         } else if (preference == mStatusBarNetworkActivity) {
-            boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                 Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
         } else {
