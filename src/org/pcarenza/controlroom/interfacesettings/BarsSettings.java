@@ -42,6 +42,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
+   private static final String SMS_BREATH = "sms_breath";
+    private static final String MISSED_CALL_BREATH = "missed_call_breath";
+    private static final String VOICEMAIL_BREATH = "voicemail_breath";
 
     private static final String CATEGORY_NAVBAR = "category_navigation_bar";
 
@@ -49,6 +52,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mStatusBarNetworkActivity;
+    private CheckBoxPreference mSMSBreath;
+    private CheckBoxPreference mMissedCallBreath;
+    private CheckBoxPreference mVoicemailBreath;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,21 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarNotifCount.setChecked(Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_NOTIF_COUNT, 0) == 1);
         mStatusBarNotifCount.setOnPreferenceChangeListener(this);
+
+       mSMSBreath = (CheckBoxPreference) findPreference(SMS_BREATH);
+        mSMSBreath.setChecked(Settings.System.getInt(resolver,
+                Settings.System.KEY_SMS_BREATH, 0) == 1);
+        mSMSBreath.setOnPreferenceChangeListener(this);
+
+        mMissedCallBreath = (CheckBoxPreference) findPreference(MISSED_CALL_BREATH);
+        mMissedCallBreath.setChecked(Settings.System.getInt(resolver,
+                Settings.System.KEY_MISSED_CALL_BREATH, 0) == 1);
+        mMissedCallBreath.setOnPreferenceChangeListener(this);
+
+        mVoicemailBreath = (CheckBoxPreference) findPreference(VOICEMAIL_BREATH);
+        mVoicemailBreath.setChecked(Settings.System.getInt(resolver,
+                Settings.System.KEY_VOICEMAIL_BREATH, 0) == 1);
+        mVoicemailBreath.setOnPreferenceChangeListener(this);
 
         mStatusBarNetworkActivity = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NETWORK_ACTIVITY);
         mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
@@ -116,6 +138,15 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         } else if (preference == mStatusBarNetworkActivity) {
             Settings.System.putInt(resolver,
                 Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
+        } else if (preference == mSMSBreath) {
+            Settings.System.putInt(resolver,
+                    Settings.System.KEY_SMS_BREATH, value ? 1 : 0);
+        } else if (preference == mMissedCallBreath) {
+            Settings.System.putInt(resolver,
+                    Settings.System.KEY_MISSED_CALL_BREATH, value ? 1 : 0);
+        } else if (preference == mVoicemailBreath) {
+            Settings.System.putInt(resolver,
+                    Settings.System.KEY_VOICEMAIL_BREATH, value ? 1 : 0);
         } else {
             return false;
         }
