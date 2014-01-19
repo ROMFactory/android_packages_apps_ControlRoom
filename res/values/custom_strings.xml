@@ -314,6 +314,20 @@
     <string name="voice_tts_notif_read_summary">Enable/disable speak for Read New messages from notifications</string>
     <string name="voice_tts_whitelist_title">Included applications</string>
     <string name="voice_tts_whitelist_summary">Which apps allowed to speak for new notifications</string>
+    <string name="voice_tts_music_title">Music track</string>
+    <string name="voice_tts_music_summary">Enable/disable speak for song name</string>
+    <string name="voice_tts_annoy_notif_title">Less frequent speak notification</string>
+    <string name="voice_tts_annoy_notif_summary">Limit the speak notification of each app to only play once per set time period</string>
+    <string name="voice_tts_annoy_notif_default">Default Behaviour</string>
+    <string name="voice_tts_annoy_notif_3s">3 seconds</string>
+    <string name="voice_tts_annoy_notif_5s">5 seconds</string>
+    <string name="voice_tts_annoy_notif_10s">10 seconds</string>
+    <string name="voice_tts_annoy_notif_15s">15 seconds</string>
+    <string name="voice_tts_annoy_notif_30s">30 seconds</string>
+    <string name="voice_tts_annoy_notif_45s">45 seconds</string>
+    <string name="voice_tts_annoy_notif_1m">1 minute</string>
+    <string name="voice_tts_annoy_notif_2m">2 minutes</string>
+    <string name="voice_tts_annoy_notif_5m">5 minutes</string>
 
     <!-- Driving mode -->
 
@@ -329,6 +343,7 @@
     <string name="voice_tts_charge_off">Charging Stop</string>
     <string name="voice_tts_time">Time is</string>
     <string name="voice_tts_date">Date is</string>
+    <string name="voice_tts_music">Now playing</string>
     <string name="voice_tts_engine_started">Drive Mode Ready</string>
     <string name="unknown_tts">Unknown</string>
     <string name="unknown_number_tts">Unknown number</string>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.pcarenza.controlroom.interfacesettings;
+package org.omnirom.omnigears.interfacesettings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -64,10 +64,11 @@ public class TtsNotification extends SettingsPreferenceFragment implements
     private static final String KEY_VOICE_TTS_CHARGE_OFF = "voice_tts_charge_off";
     private static final String KEY_VOICE_TTS_CLOCK = "voice_tts_clock";
     private static final String KEY_VOICE_TTS_DATE = "voice_tts_date";
+    private static final String KEY_VOICE_TTS_MUSIC = "voice_tts_music";
     private static final String KEY_VOICE_TTS_NOTIF = "voice_tts_notif";
     private static final String KEY_VOICE_TTS_NOTIF_READ = "voice_tts_notif_read";
     private static final String KEY_VOICE_TTS_INCLUDED_APPS = "voice_tts_whitelist";
-    private static final String KEY_VOICE_ANNOY_NOTIF = "voice_tts_annoy_notif";
+    private static final String KEY_VOICE_TTS_ANNOY_NOTIF = "voice_tts_annoy_notif";
 
     private static final int MULTIPLIER_VOLUME = 10;
 
@@ -142,7 +143,7 @@ public class TtsNotification extends SettingsPreferenceFragment implements
         mEnableVoiceTTSdate.setChecked(mShareprefs.getBoolean(IntentReceiver.ENABLED_DATE, false));
         mEnableVoiceTTSdate.setOnPreferenceChangeListener(this);
 
-       mEnableVoiceTTSmusic = (CheckBoxPreference) prefSet.findPreference(KEY_VOICE_TTS_MUSIC);
+        mEnableVoiceTTSmusic = (CheckBoxPreference) prefSet.findPreference(KEY_VOICE_TTS_MUSIC);
         mEnableVoiceTTSmusic.setChecked(mShareprefs.getBoolean(IntentReceiver.ENABLED_MUSIC, false));
         mEnableVoiceTTSmusic.setOnPreferenceChangeListener(this);
 
@@ -159,9 +160,9 @@ public class TtsNotification extends SettingsPreferenceFragment implements
         if (includedApps != null) mIncludedAppsPref.setValues(includedApps);
         mIncludedAppsPref.setOnPreferenceChangeListener(this);
 
-       mAnnoyingNotifications = (ListPreference) prefSet.findPreference(KEY_VOICE_TTS_ANNOY_NOTIF);
+        mAnnoyingNotifications = (ListPreference) prefSet.findPreference(KEY_VOICE_TTS_ANNOY_NOTIF);
         mAnnoyingNotifications.setValue(Integer.toString(
-           mShareprefs.getInt(IntentReceiver.ANNOYING_NOTIFICATION, 0)));
+                   mShareprefs.getInt(IntentReceiver.ANNOYING_NOTIFICATION, 0)));
         mAnnoyingNotifications.setOnPreferenceChangeListener(this);
 
         if (!mShareprefs.getBoolean(IntentReceiver.FIRST_BOOT_INUSE, false)) {
@@ -258,7 +259,7 @@ public class TtsNotification extends SettingsPreferenceFragment implements
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_DATE, false).commit();
                 mEnableVoiceTTSdate.setChecked(false);
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_MUSIC, false).commit();
-                mEnableVoiceTTSmusic.setChacked(false);
+                mEnableVoiceTTSmusic.setChecked(false);
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_NOTIF, false).commit();
                 mEnableVoiceTTSnotif.setChecked(false);
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_NOTIF_READ, false).commit();
@@ -316,13 +317,13 @@ public class TtsNotification extends SettingsPreferenceFragment implements
             boolean value = (Boolean) newValue;
             mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_CLOCK, value ? true : false).commit();
             return true;
-        } else if (preference == mEnableVoiceTTSmusic) {
-            boolean value = (Boolean) newValue;
-            mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_MUSIC, value ? true : false).commit();
-            return true;
         } else if (preference == mEnableVoiceTTSdate) {
             boolean value = (Boolean) newValue;
             mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_DATE, value ? true : false).commit();
+            return true;
+        } else if (preference == mEnableVoiceTTSmusic) {
+            boolean value = (Boolean) newValue;
+            mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_MUSIC, value ? true : false).commit();
             return true;
         } else if (preference == mEnableVoiceTTSnotif) {
             boolean value = (Boolean) newValue;
