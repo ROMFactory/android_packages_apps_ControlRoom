@@ -51,7 +51,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarNotifCount;
-    private CheckBoxPreference mStatusBarNetworkActivity;
     private CheckBoxPreference mSMSBreath;
     private CheckBoxPreference mMissedCallBreath;
     private CheckBoxPreference mVoicemailBreath;
@@ -102,12 +101,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
                 Settings.System.KEY_VOICEMAIL_BREATH, 0) == 1);
         mVoicemailBreath.setOnPreferenceChangeListener(this);
 
-        mStatusBarNetworkActivity = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NETWORK_ACTIVITY);
-        mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
-            Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
-        mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
-        mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
-
         try {
             boolean hasNavBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar();
             // Hide navigation bar category on devices without navigation bar
@@ -135,9 +128,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
                 Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
         } else if (preference == mStatusBarNotifCount) {
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
-        } else if (preference == mStatusBarNetworkActivity) {
-            Settings.System.putInt(resolver,
-                Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
         } else if (preference == mSMSBreath) {
             Settings.System.putInt(resolver,
                     Settings.System.KEY_SMS_BREATH, value ? 1 : 0);
