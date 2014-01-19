@@ -40,7 +40,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import org.omnirom.omnigears.chameleonos.SeekBarPreference;
+import org.pcarenza.controlroom.widget.SeekBarPreference;
 import org.omnirom.omnigears.chameleonos.AppMultiSelectListPreference;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.tts.IntentReceiver;
@@ -63,11 +63,12 @@ public class TtsNotification extends SettingsPreferenceFragment implements
     private static final String KEY_VOICE_TTS_CHARGE_ON = "voice_tts_charge_on";
     private static final String KEY_VOICE_TTS_CHARGE_OFF = "voice_tts_charge_off";
     private static final String KEY_VOICE_TTS_CLOCK = "voice_tts_clock";
+    private static final String KEY_VOICE_TTS_MUSIC = "voice_tts_music";
     private static final String KEY_VOICE_TTS_DATE = "voice_tts_date";
     private static final String KEY_VOICE_TTS_NOTIF = "voice_tts_notif";
     private static final String KEY_VOICE_TTS_NOTIF_READ = "voice_tts_notif_read";
     private static final String KEY_VOICE_TTS_INCLUDED_APPS = "voice_tts_whitelist";
-    private static final String KEY_VOICE_ANNOY_NOTIF = "voice_tts_annoy_notif";
+    private static final String KEY_VOICE_TTS_ANNOY_NOTIF = "voice_tts_annoy_notif";
 
     private static final int MULTIPLIER_VOLUME = 10;
 
@@ -258,7 +259,7 @@ public class TtsNotification extends SettingsPreferenceFragment implements
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_DATE, false).commit();
                 mEnableVoiceTTSdate.setChecked(false);
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_MUSIC, false).commit();
-                mEnableVoiceTTSmusic.setChacked(false);
+                mEnableVoiceTTSmusic.setChecked(false);
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_NOTIF, false).commit();
                 mEnableVoiceTTSnotif.setChecked(false);
                 mShareprefs.edit().putBoolean(IntentReceiver.ENABLED_NOTIF_READ, false).commit();
