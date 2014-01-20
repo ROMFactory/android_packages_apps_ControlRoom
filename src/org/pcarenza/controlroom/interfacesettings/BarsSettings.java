@@ -31,7 +31,10 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.DisplayInfo;
+import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
 public class BarsSettings extends SettingsPreferenceFragment implements
@@ -42,9 +45,14 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
+    private static final String SMART_PULLDOWN = "smart_pulldown";
    private static final String SMS_BREATH = "sms_breath";
     private static final String MISSED_CALL_BREATH = "missed_call_breath";
     private static final String VOICEMAIL_BREATH = "voicemail_breath";
+
+    private static final int DEVICE_PHONE = 0;
+    private static final int DEVICE_HYBRID = 1;
+    private static final int DEVICE_TABLET = 2;
 
     private static final String CATEGORY_NAVBAR = "category_navigation_bar";
 
@@ -54,6 +62,8 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mSMSBreath;
     private CheckBoxPreference mMissedCallBreath;
     private CheckBoxPreference mVoicemailBreath;
+    private ListPreference mSmartPulldown;
+
 
 
     @Override
@@ -85,6 +95,18 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarNotifCount.setChecked(Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_NOTIF_COUNT, 0) == 1);
         mStatusBarNotifCount.setOnPreferenceChangeListener(this);
+
+        mSmartPulldown = (ListPreference) findPreference(SMART_PULLDOWN);	
+
+        if isPhone(getActivity())) {
+            int smartPulldown = Settings.System.getInt(resolver,
+                    Settings.System.QS_SMART_PULLDOWN, 0);
+            mSmartPulldown.setValue(String.valueOf(smartPulldown));
+            updateSmartPulldownSummary(smartPulldown);
+            mSmartPulldown.setOnPreferenceChangeListener(this);
+        } else {
+            prefSet.removePreference(mSmartPulldown);
+        }
 
        mSMSBreath = (CheckBoxPreference) findPreference(SMS_BREATH);
         mSMSBreath.setChecked(Settings.System.getInt(resolver,
@@ -128,6 +150,11 @@ public class BarsSettings extends SettingsPreferenceFragment implements
                 Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
         } else if (preference == mStatusBarNotifCount) {
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
+        } else if (preference == mSmartPulldown) {
+            int smartPulldown = Integer.valueOf((String) objValue);
+            Settings.System.putInt(resolver, Settings.System.QS_SMART_PULLDOWN,	
+                    smartPulldown);
+            updateSmartPulldownSummary(smartPulldown);
         } else if (preference == mSMSBreath) {
             Settings.System.putInt(resolver,
                     Settings.System.KEY_SMS_BREATH, value ? 1 : 0);
@@ -141,5 +168,47 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             return false;
         }
         return true;
+    }
+
+   private void updateQuickPulldownSummary(int i) {
+        if (i == 0) {
+            mQuickPulldown.setSummary(R.string.quick_pulldown_off);
+        } else if (i == 1) {
+            mQuickPulldown.setSummary(R.string.quick_pulldown_right);
+        } else if (i == 2) {
+            mQuickPulldown.setSummary(R.string.quick_pulldown_left);
+        } else if (i == 3) {
+            mQuickPulldown.setSummary(R.string.quick_pulldown_centre);
+        }
+    }
+
+    private void updateSmartPulldownSummary(int i) {
+        if (i == 0) {
+            mSmartPulldown.setSummary(R.string.smart_pulldown_off);
+        } else if (i == 1) {
+            mSmartPulldown.setSummary(R.string.smart_pulldown_dismissable);
+        } else if (i == 2) {
+            mSmartPulldown.setSummary(R.string.smart_pulldown_persistent);
+        }
+    }
+
+    private static int getScreenType(Context con) {
+        WindowManager wm = (WindowManager) con.getSystemService(Context.WINDOW_SERVICE);
+        DisplayInfo outDisplayInfo = new DisplayInfo();
+        wm.getDefaultDisplay().getDisplayInfo(outDisplayInfo);
+        int shortSize = Math.min(outDisplayInfo.logicalHeight, outDisplayInfo.logicalWidth);
+        int shortSizeDp =
+            shortSize * DisplayMetrics.DENSITY_DEFAULT / outDisplayInfo.logicalDensityDpi;
+        if (shortSizeDp < 600) {
+            return DEVICE_PHONE;
+        } else if (shortSizeDp < 720) {
+            return DEVICE_HYBRID;
+        } else {
+            return DEVICE_TABLET;
+        }
+    }
+
+    public static boolean isPhone(Context con) {
+        return getScreenType(con) == DEVICE_PHONE;
     }
 }

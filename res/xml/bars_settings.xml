@@ -70,6 +70,14 @@
             android:summary="@string/missed_call_breath_summary"
             android:persistent="false"/>
 
+        <ListPreference
+                android:key="smart_pulldown"
+                android:title="@string/smart_pulldown_title"
+                android:summary="@string/smart_pulldown_summary"
+                android:entries="@array/smart_pulldown_entries"
+                android:entryValues="@array/smart_pulldown_values"
+                android:persistent="false" />
+
         <CheckBoxPreference
             android:key="voicemail_breath"
             android:title="@string/voicemail_breath_title"
